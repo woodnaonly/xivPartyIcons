@@ -8,6 +8,7 @@ using FFXIVClientStructs.FFXIV.Client.Graphics;
 using FFXIVClientStructs.FFXIV.Client.System.String;
 using FFXIVClientStructs.FFXIV.Client.UI;
 using FFXIVClientStructs.FFXIV.Component.GUI;
+using PartyIcons.FFXIVClientStructsKr;
 
 namespace PartyIcons.Api
 {
@@ -199,8 +200,8 @@ namespace PartyIcons.Api
                             return null;
                         }
 
-                        var npInfoArrayPtr = XivApi.RaptureAtkModulePtr + Marshal.OffsetOf(typeof(RaptureAtkModule), nameof(RaptureAtkModule.NamePlateInfoArray)).ToInt32();
-                        var npInfoPtr = npInfoArrayPtr + Marshal.SizeOf(typeof(RaptureAtkModule.NamePlateInfo)) * Index;
+                        var npInfoArrayPtr = XivApi.RaptureAtkModulePtr + Marshal.OffsetOf(typeof(RaptureAtkModuleKr), nameof(RaptureAtkModuleKr.NamePlateInfoArray)).ToInt32();
+                        var npInfoPtr = npInfoArrayPtr + Marshal.SizeOf(typeof(RaptureAtkModuleKr.NamePlateInfo)) * Index;
                         _NamePlateInfo = new SafeNamePlateInfo(npInfoPtr);
                     }
                     return _NamePlateInfo;
@@ -261,35 +262,31 @@ namespace PartyIcons.Api
         public class SafeNamePlateInfo
         {
             public readonly IntPtr                         Pointer;
-            public readonly RaptureAtkModule.NamePlateInfo Data;
+            public readonly RaptureAtkModuleKr.NamePlateInfo Data;
 
             public SafeNamePlateInfo(IntPtr pointer)
             {
                 Pointer = pointer; //-0x10;
-                Data = Marshal.PtrToStructure<RaptureAtkModule.NamePlateInfo>(Pointer);
+                Data = Marshal.PtrToStructure<RaptureAtkModuleKr.NamePlateInfo>(Pointer);
             }
 
             #region Getters
 
-            public IntPtr NameAddress => GetStringPtr(nameof(RaptureAtkModule.NamePlateInfo.Name));
+            public IntPtr NameAddress => GetStringPtr(nameof(RaptureAtkModuleKr.NamePlateInfo.Name));
 
             public string Name => GetString(NameAddress);
 
-            public IntPtr FcNameAddress => GetStringPtr(nameof(RaptureAtkModule.NamePlateInfo.FcName));
+            public IntPtr FcNameAddress => GetStringPtr(nameof(RaptureAtkModuleKr.NamePlateInfo.FcName));
 
             public string FcName => GetString(FcNameAddress);
 
-            public IntPtr TitleAddress => GetStringPtr(nameof(RaptureAtkModule.NamePlateInfo.Title));
+            public IntPtr TitleAddress => GetStringPtr(nameof(RaptureAtkModuleKr.NamePlateInfo.Title));
 
             public string Title => GetString(TitleAddress);
 
-            public IntPtr DisplayTitleAddress => GetStringPtr(nameof(RaptureAtkModule.NamePlateInfo.DisplayTitle));
+            public IntPtr DisplayTitleAddress => GetStringPtr(nameof(RaptureAtkModuleKr.NamePlateInfo.DisplayTitle));
 
             public string DisplayTitle => GetString(DisplayTitleAddress);
-
-            public IntPtr LevelTextAddress => GetStringPtr(nameof(RaptureAtkModule.NamePlateInfo.LevelText));
-
-            public string LevelText => GetString(LevelTextAddress);
 
             #endregion
 
@@ -303,7 +300,7 @@ namespace PartyIcons.Api
 
             private unsafe IntPtr GetStringPtr(string name)
             {
-                var namePtr = Pointer + Marshal.OffsetOf(typeof(RaptureAtkModule.NamePlateInfo), name).ToInt32();
+                var namePtr = Pointer + Marshal.OffsetOf(typeof(RaptureAtkModuleKr.NamePlateInfo), name).ToInt32();
                 var stringPtrPtr = namePtr + Marshal.OffsetOf(typeof(Utf8String), nameof(Utf8String.StringPtr)).ToInt32();
                 var stringPtr = Marshal.ReadIntPtr(stringPtrPtr);
                 return stringPtr;

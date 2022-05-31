@@ -4,7 +4,6 @@ using Dalamud.Game.ClientState.Party;
 using Dalamud.Game.Gui;
 using Dalamud.IoC;
 using Dalamud.Logging;
-using FFXIVClientStructs.FFXIV.Client.System.String;
 using FFXIVClientStructs.FFXIV.Client.UI;
 using FFXIVClientStructs.FFXIV.Client.UI.Agent;
 using PartyIcons.Entities;
@@ -177,7 +176,7 @@ namespace PartyIcons.Utils
                     result.AppendLine($"PartyMemberStruct index {i} name '{strippedName}', id matched {memberList[i].ObjectId}");
 
                     var byteCount = 0;
-                    while (byteCount < 16 && memberList[i].Name[byteCount++] != 0) { }
+                    while (byteCount < 32 && memberList[i].Name[byteCount++] != 0) { }
 
                     var memberListName = Encoding.UTF8.GetString(memberList[i].Name, byteCount - 1);
                     result.AppendLine($"HudPartyMember index {i} name {memberListName} {memberList[i].ObjectId}");
@@ -216,13 +215,17 @@ namespace PartyIcons.Utils
 
         private string StripSpecialCharactersFromName(string name)
         {
-            var result = new StringBuilder();
-            for (var i = 0; i < name.Length; i++)
+            if (name.Contains(' ') && name.StartsWith("레벨"))
             {
-                var ch = name[i];
-                if ((ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122) || (ch == 45) || ch == 32 || ch == 39)
+                name = name[2..];
+            }
+
+            var result = new StringBuilder();
+            foreach (var ch in name)
+            {
+                if (('a' <= ch && ch <= 'z') || ('A' <= ch && ch <= 'Z') || (ch == '\'') || ('가' <= ch && ch <= '힇'))
                 {
-                    result.Append(name[i]);
+                    result.Append(ch);
                 }
             }
 
