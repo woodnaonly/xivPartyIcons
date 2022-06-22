@@ -14,16 +14,16 @@ namespace PartyIcons.FFXIVClientStructsKr
             [FieldOffset(0)]
             public GameObjectID ObjectID;
 
-            [FieldOffset(48 + 34)]
+            [FieldOffset(48)]
             public Utf8String Name;
 
-            [FieldOffset(152 + 34)]
+            [FieldOffset(152)]
             public Utf8String FcName;
 
-            [FieldOffset(256 + 34)]
+            [FieldOffset(256)]
             public Utf8String Title;
 
-            [FieldOffset(360 + 34)]
+            [FieldOffset(360)]
             public Utf8String DisplayTitle;
         }
 
