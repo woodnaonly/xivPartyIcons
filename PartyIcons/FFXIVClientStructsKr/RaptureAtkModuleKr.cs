@@ -5,7 +5,7 @@ using FFXIVClientStructs.FFXIV.Component.GUI;
 
 namespace PartyIcons.FFXIVClientStructsKr
 {
-    [StructLayout(LayoutKind.Explicit, Size = 162112)]
+    [StructLayout(LayoutKind.Explicit, Size = 164256)]
     public struct RaptureAtkModuleKr
     {
         [StructLayout(LayoutKind.Explicit, Size = 584)]
@@ -25,12 +25,15 @@ namespace PartyIcons.FFXIVClientStructsKr
 
             [FieldOffset(360)]
             public Utf8String DisplayTitle;
+
+            [FieldOffset(464)]
+            public Utf8String LevelText;
         }
 
         [FieldOffset(0)]
         public AtkModule AtkModule;
 
-        [FieldOffset(107864)] // 107880 -> 107864
+        [FieldOffset(110008)] // 107880 -> 110008
         public NamePlateInfo NamePlateInfoArray;
     }
 }
